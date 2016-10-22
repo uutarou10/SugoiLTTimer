@@ -80,14 +80,17 @@ ipc.on('remainSecond', function (event, arg) {
 io.sockets.on('connection', function (socket) {
     //socket.emit('remainSecond', remainSecond)
     socket.on('startStop', function (data) {
-        console.log(data)
+        mainWindow.webContents.send('startStop')
     })
 
     socket.on('reset', function (data) {
         //reset
+        mainWindow.webContents.send('reset')
+
     })
 
     socket.on('bell', function (data) {
         //bell
+        mainWindow.webContents.send('bell')        
     })
 })

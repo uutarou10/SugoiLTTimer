@@ -10,9 +10,9 @@ function startStop () {
 }
 
 function resetTimer () {
-
+    socket.emit('reset')
 }
 
 function playBell () {
-
+    socket.emit('bell')
 }

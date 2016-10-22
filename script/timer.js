@@ -7,11 +7,11 @@ document.onkeydown = keyDown
 
 drawTimer()
 
-function drawTimer () {
+function drawTimer() {
     let minute = Math.abs(parseInt(remainSecond / 60))
     // let second = ('0' + Math.abs(remainSecond - (minute * 60))).slice(-2)
     let second = ('0' + Math.abs(remainSecond % 60)).slice(-2)
-    
+
     if (remainSecond < 0) {
         timer.style.color = "red"
     }
@@ -19,28 +19,28 @@ function drawTimer () {
     timer.innerHTML = minute + ':' + second
 }
 
-function countDown () {
+function countDown() {
     drawTimer()
-        if (remainSecond === 0) {
+    if (remainSecond === 0) {
         playBell()
     }
 
     remainSecond = remainSecond - 1
 
     //メインプロセスへ残り時間を送信
-    ipc.send('remainSecond',remainSecond)
+    ipc.send('remainSecond', remainSecond)
 }
 
-function startTimer () {
-    interval = setInterval(countDown,1000)
+function startTimer() {
+    interval = setInterval(countDown, 1000)
 }
 
-function stopTimer () {
+function stopTimer() {
     clearInterval(interval)
     interval = null
 }
 
-function resetTimer () {
+function resetTimer() {
     if (interval !== null) {
         stopTimer()
     }
@@ -49,7 +49,15 @@ function resetTimer () {
     drawTimer()
 }
 
-function keyDown () {
+function toggleStartStop() {
+    if (interval === null) {
+        startTimer()
+    } else {
+        stopTimer()
+    }
+}
+
+function keyDown() {
     switch (event.keyCode) {
         case 32:
             //space key
@@ -58,20 +66,33 @@ function keyDown () {
             } else {
                 stopTimer()
             }
-        break
+            break
         case 82:
             //R key
             resetTimer()
-        break
+            break
         case 68:
             //D key
             resetTimer()
             remainSecond = 5
             drawTimer()
-        break
+            break
     }
 }
 
-function playBell () {
+function playBell() {
     document.getElementById('bell').play()
 }
+
+//ipc
+ipc.on('startStop', function (event, arg) {
+    toggleStartStop()
+})
+
+ipc.on('reset', function (event, arg) {
+    resetTimer()
+})
+
+ipc.on('bell', function (event, arg) {
+    playBell()
+})
