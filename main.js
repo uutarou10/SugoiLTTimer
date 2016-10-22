@@ -3,7 +3,7 @@ const fs = require('fs')
 const ipc = electron.ipcMain
 const app = electron.app
 const BrowserWindow = electron.BrowserWindow
-
+const appPath = app.getAppPath()
 let mainWindow
 
 function createWindow() {
@@ -36,7 +36,7 @@ const server = http.createServer()
 let controler_html
 const port = 8080 //コントローラーのポート番号
 
-fs.readFile('./controler.html', 'utf8', function (err, text) {
+fs.readFile(appPath + '/controler.html', 'utf8', function (err, text) {
     controler_html = text
 })
 
@@ -49,16 +49,13 @@ server.on('request', function (req, res) {
             res.end()
         } else {
             res.writeHead(200, { 'Content-Type': 'text/html' })
-
-            const stream = fs.createReadStream('controler.html')
-            stream.pipe(res)
-            // res.write(controler_html)
-            // res.end()
+            res.write(controler_html)
+            res.end()
         }
-    } else if (fs.existsSync(req.url.slice(1))) {
+    } else if (fs.existsSync(appPath + req.url)) {
         // /以外へのアクセスがあったときの処理
-
-        const stream = fs.createReadStream(req.url.slice(1))
+        res.writeHead(200)
+        const stream = fs.createReadStream(appPath + req.url)
         stream.pipe(res)
     } else {
         res.writeHead(404, { 'Content-Type': 'text/plain' })
