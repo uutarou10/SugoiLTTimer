@@ -1,12 +1,16 @@
 {
   "name": "SugoiTimer",
   "version": "1.0.0",
-  "description": "",
+  "description": "Super useful timer app for lighting talk events by Electron",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^1.4.4",
+    "socket.io": "^1.5.0"
+  }
 }
