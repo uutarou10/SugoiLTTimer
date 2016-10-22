@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Controler | Sugoi LT Timer</title>
+</head>
+
+<body>
+	<div class="container">
+		<h1>Controler <small>Sugoi LT Timer</small></h1>
+		<div class="row">
+			<p id="timmerStatus">Running</p>
+			<p style="font-size:150%"><span class="glyphicon glyphicon-time" aria-hidden="true"></span><b id="remainTime">5:00</b></p>
+			<div class="progress">
+				<div class="progress-bar progress-bar-success" role="progressbar" id="progress" style="width: 100%">
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<button type="button" class="btn btn-primary" onclick="startStop()">START/STOP</button>
+			<button type="button" class="btn btn-danger" onclick="resetTimer()">RESET</button>
+			<button type="button" class="btn btn-warning" onclick="playBell()">Bell</button>
+		</div>
+
+	</div>
+	<script src="socket.io/socket.io.js"></script>
+	<script src="script/controler.js"></script>
+</body>
+
+</html>
