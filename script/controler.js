@@ -17,6 +17,10 @@ function playBell() {
     socket.emit('bell')
 }
 
+function playClap() {
+    socket.emit('clap')
+}
+
 function refreshTimer(remainSecond) {
     const minute = Math.abs(parseInt(remainSecond / 60))
     const second = ('0' + Math.abs(remainSecond % 60)).slice(-2)

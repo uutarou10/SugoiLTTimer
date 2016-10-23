@@ -88,6 +88,13 @@ function playBell() {
     audio.play()
 }
 
+function playClap() {
+    const audio = document.getElementById('clap')
+    audio.pause()
+    audio.currentTime = 0
+    audio.play()
+}
+
 //ipc
 ipc.on('startStop', function (event, arg) {
     toggleStartStop()
@@ -99,4 +106,8 @@ ipc.on('reset', function (event, arg) {
 
 ipc.on('bell', function (event, arg) {
     playBell()
+})
+
+ipc.on('clap', function (event, arg) {
+    playClap()
 })

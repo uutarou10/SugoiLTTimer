@@ -85,6 +85,11 @@ io.sockets.on('connection', function (socket) {
         mainWindow.webContents.send('bell')
     })
 
+    socket.on('clap', function (data) {
+        //clap
+        mainWindow.webContents.send('clap')
+    })
+
     ipc.on('remainSecond', function (event, arg) {
         socket.emit('remainSecond', arg)
     })
