@@ -81,7 +81,10 @@ function keyDown() {
 }
 
 function playBell() {
-    document.getElementById('bell').play()
+    const audio = document.getElementById('bell')
+    audio.pause()
+    audio.currentTime = 0
+    audio.play()
 }
 
 //ipc
