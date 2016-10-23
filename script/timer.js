@@ -47,6 +47,7 @@ function resetTimer() {
     remainSecond = 5 * 60
     timer.style.color = "white"
     drawTimer()
+    ipc.send('remainSecond', remainSecond)
 }
 
 function toggleStartStop() {

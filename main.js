@@ -67,12 +67,6 @@ server.listen(port)
 const io = require('socket.io').listen(server)
 console.log('Server running on port ' + port + '...')
 
-//残り時間をrendererから取得
-let remainSecond
-ipc.on('remainSecond', function (event, arg) {
-    remainSecond = arg
-})
-
 //Socket.io
 io.sockets.on('connection', function (socket) {
     //socket.emit('remainSecond', remainSecond)
@@ -88,6 +82,10 @@ io.sockets.on('connection', function (socket) {
 
     socket.on('bell', function (data) {
         //bell
-        mainWindow.webContents.send('bell')        
+        mainWindow.webContents.send('bell')
+    })
+
+    ipc.on('remainSecond', function (event, arg) {
+        socket.emit('remainSecond', arg)
     })
 })
