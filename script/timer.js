@@ -81,21 +81,14 @@ function keyDown() {
     }
 }
 
-function playBell() {
-    const audio = document.getElementById('bell')
+function playAudio (audioId) {
+    const audio = document.getElementById(audioId)
     audio.pause()
     audio.currentTime = 0
     audio.play()
 }
 
-function playClap() {
-    const audio = document.getElementById('clap')
-    audio.pause()
-    audio.currentTime = 0
-    audio.play()
-}
-
-//ipc
+ //ipc
 ipc.on('startStop', function (event, arg) {
     toggleStartStop()
 })
@@ -105,9 +98,9 @@ ipc.on('reset', function (event, arg) {
 })
 
 ipc.on('bell', function (event, arg) {
-    playBell()
+    playAudio('bell')
 })
 
 ipc.on('clap', function (event, arg) {
-    playClap()
+    playAudio('clap')
 })
