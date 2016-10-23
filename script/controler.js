@@ -27,6 +27,7 @@ function refreshTimer(remainSecond) {
     if (remainSecond < 0) {
         remainTime.style.color = 'red'
     } else {
+        remainTime.style.color = 'black'
         const progressBar = document.getElementById('progress')
         progressBar.style.width = progress + '%'
     }
