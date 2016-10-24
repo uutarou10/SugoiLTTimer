@@ -3,6 +3,7 @@ const fs = require('fs')
 const ipc = electron.ipcMain
 const app = electron.app
 const BrowserWindow = electron.BrowserWindow
+const powerSaveBlocker = electron.powerSaveBlocker
 const appPath = app.getAppPath()
 let mainWindow
 
@@ -13,6 +14,8 @@ function createWindow() {
     mainWindow.on('closed', function () {
         mainWindow = null
     })
+    //Power save block
+    powerSaveBlocker.start('prevent-display-sleep')
 }
 
 app.on('ready', createWindow)
@@ -32,7 +35,6 @@ app.on('activate', function () {
 //コントローラーを配信
 const http = require('http')
 const server = http.createServer()
-// const io = require('socket.io').listen(server)
 let controler_html
 const port = 8080 //コントローラーのポート番号
 
@@ -69,7 +71,6 @@ console.log('Server running on port ' + port + '...')
 
 //Socket.io
 io.sockets.on('connection', function (socket) {
-    //socket.emit('remainSecond', remainSecond)
     socket.on('startStop', function (data) {
         mainWindow.webContents.send('startStop')
     })
