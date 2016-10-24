@@ -4,6 +4,11 @@ const ipc = electron.ipcMain
 const app = electron.app
 const BrowserWindow = electron.BrowserWindow
 const powerSaveBlocker = electron.powerSaveBlocker
+
+const auth = require('basic-auth')
+const auth_name = 'timer'
+const auth_pass = 'this_is_pass'
+
 const appPath = app.getAppPath()
 let mainWindow
 
@@ -50,9 +55,15 @@ server.on('request', function (req, res) {
             res.write('500 Internal Server Error')
             res.end()
         } else {
-            res.writeHead(200, { 'Content-Type': 'text/html' })
-            res.write(controler_html)
-            res.end()
+            const credential = auth(req)
+            if (credential && credential.name === auth_name && credential.pass === auth_pass) {
+                res.writeHead(200, { 'Content-Type': 'text/html' })
+                res.write(controler_html)
+                res.end()
+            } else {
+                res.writeHead(401, { 'WWW-Authenticate': 'Basic realm="Sugoi LT Timer"' })
+                res.end('401 Unauthorized')
+            }
         }
     } else if (fs.existsSync(appPath + req.url)) {
         // /以外へのアクセスがあったときの処理
