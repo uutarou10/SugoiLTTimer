@@ -16,13 +16,13 @@ function drawTimer() {
         timer.style.color = "red"
     }
 
-    timer.innerHTML = minute + ':' + second
+    timer.innerHTML = minute + ':' + second 
 }
 
 function countDown() {
     drawTimer()
     if (remainSecond === 0) {
-        playBell()
+        playAudio('bell')
     }
 
     remainSecond = remainSecond - 1
